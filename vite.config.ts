@@ -7,6 +7,7 @@ import vueJsx from "@vitejs/plugin-vue-jsx"
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons"
 import svgLoader from "vite-svg-loader"
 import UnoCSS from "unocss/vite"
+import { NodePolyFillsPlugin } from "./node-polyfills-plugins"
 
 /** 配置项文档：https://cn.vitejs.dev/config */
 export default (configEnv: ConfigEnv): UserConfigExport => {
@@ -41,6 +42,13 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
           ws: true,
           /** 是否允许跨域 */
           changeOrigin: true
+        },
+        "/jenkins": {
+          target: "http://10.10.7.23:8080",
+          ws: true,
+          /** 是否允许跨域 */
+          changeOrigin: true,
+          rewrite: (path) => path.replace("/jenkins", "")
         }
       }
     },
@@ -77,6 +85,7 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
     },
     /** Vite 插件 */
     plugins: [
+      NodePolyFillsPlugin(),
       vue(),
       vueJsx(),
       /** 将 SVG 静态图转化为 Vue 组件 */

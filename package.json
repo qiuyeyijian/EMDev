@@ -25,9 +25,13 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "2.1.0",
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
+    "add": "^2.0.6",
     "axios": "1.5.1",
     "dayjs": "1.11.10",
     "element-plus": "2.3.14",
+    "jenkins-client-ts": "^1.0.1",
     "js-cookie": "3.0.5",
     "lodash-es": "4.17.21",
     "mitt": "3.0.1",
