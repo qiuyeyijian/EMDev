@@ -6,8 +6,8 @@ import { JenkinsClient } from "jenkins-client-ts"
 
 const jenkins = new JenkinsClient({
   baseUrl: "/jenkins",
-  username: "longwei.zhang",
-  password: "Fighting@982121"
+  username: "qiuyeyijian",
+  password: "qiuyeyijian"
 })
 
 // const handleDelete = (index: any, row: any) => {
