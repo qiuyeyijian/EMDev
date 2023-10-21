@@ -3,6 +3,7 @@ import { request } from "@/utils/service"
 import { ElMessageBox, ElMessage } from "element-plus"
 import { reactive, onMounted } from "vue"
 import { JenkinsClient } from "jenkins-client-ts"
+import { JobPath } from "jenkins-client-ts"
 
 const jenkins = new JenkinsClient({
   baseUrl: "/jenkins",
@@ -10,46 +11,46 @@ const jenkins = new JenkinsClient({
   password: "qiuyeyijian"
 })
 
-// const handleDelete = (index: any, row: any) => {
-//   console.log(index, row)
-// }
-
-// const handlEdit = (index: any, row: any) => {
-//   console.log(index, row)
-//   ElMessageBox.prompt("请输入你的持仓成本价", "Tip", {
-//     confirmButtonText: "OK",
-//     cancelButtonText: "Cancel",
-//     inputPattern: /^\d+(?:\.\d+)?$/,
-//     inputErrorMessage: "无效输入"
-//   })
-//     .then(({ value }) => {
-//       ElMessage({
-//         type: "success",
-//         message: `你的持仓成本价是:${value}`
-//       })
-//       row.f_hold_nav = value
-//       request({
-//         url: `${VITE_BASE_API}/fund/hold/${row.f_code}/${value}`,
-//         method: "patch"
-//       })
-//     })
-//     .catch(() => {
-//       ElMessage({
-//         type: "info",
-//         message: "Input canceled"
-//       })
-//     })
-// }
-
 interface IPipelineInfo {
   name: string
+  url: string
+  color: string
 }
 
 const tableData = reactive<IPipelineInfo[]>([])
 async function getAllPipelineInfo() {
-  const jobs = await jenkins.jobs.list("/")
+  const jobs: any = await jenkins.jobs.list("/")
   tableData.push(...jobs)
   console.log(jobs)
+}
+
+const handleRun = async (row: any) => {
+  console.log(row)
+  row.color = "gray"
+  const jobPath = JobPath.parse(row.url).path()
+  // trigger a job with parameters, wait for it to complete, then check wheter job result is 'SUCCESS'
+  const queueId = await jenkins.jobs.build(jobPath, undefined, {
+    waitForStart: true
+  })
+  const buildNumber = (await jenkins.queue.get(queueId)).executable.number
+  const build = await jenkins.builds.get(jobPath, buildNumber)
+
+  console.log(queueId)
+  console.log(buildNumber)
+
+  if (build.result === "SUCCESS") {
+    row.color = "blue"
+  } else {
+    row.color = "red"
+  }
+}
+
+const handleConfig = (row: any) => {
+  console.log(row)
+}
+
+const handleWeb = (row: any) => {
+  window.open(row.url, "_blank")
 }
 
 onMounted(() => {
@@ -60,5 +61,19 @@ onMounted(() => {
 <template>
   <el-table :data="tableData" style="width: 100%">
     <el-table-column fixed prop="name" label="Pipeline" width="400" />
+    <el-table-column prop="color" label="状态" align="center">
+      <template #default="scope">
+        <el-tag v-if="scope.row.color === 'blue'" type="success" effect="plain">成功</el-tag>
+        <el-tag v-else-if="scope.row.color === 'gray'" type="warning" effect="plain">运行中</el-tag>
+        <el-tag v-else type="danger" effect="plain">失败</el-tag>
+      </template>
+    </el-table-column>
+    <el-table-column fixed="right" prop="url" label="操作" width="200" align="center">
+      <template #default="scope">
+        <el-button type="primary" text bg size="small" @click="handleRun(scope.row)">运行</el-button>
+        <el-button type="danger" text bg size="small" @click="handleConfig(scope.row)">配置</el-button>
+        <el-button type="info" text bg size="small" @click="handleWeb(scope.row)">网页版</el-button>
+      </template>
+    </el-table-column>
   </el-table>
 </template>
