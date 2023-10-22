@@ -30,7 +30,7 @@ const defaultConfig = {
 }
 
 /** body 元素 */
-const bodyEl = ref<HTMLElement>(document.body)
+const bodyEl = ref<HTMLElement>(document.body) as any
 
 /**
  * 创建水印
