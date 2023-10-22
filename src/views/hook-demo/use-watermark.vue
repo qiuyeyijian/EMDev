@@ -3,7 +3,7 @@ import { ref } from "vue"
 import { useWatermark } from "@/hooks/useWatermark"
 
 const localRef = ref<HTMLElement | null>(null)
-const { setWatermark, clearWatermark } = useWatermark(localRef)
+const { setWatermark, clearWatermark } = useWatermark(localRef as any)
 const { setWatermark: setGlobalWatermark, clearWatermark: clearGlobalWatermark } = useWatermark()
 </script>
 
