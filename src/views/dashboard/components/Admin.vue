@@ -37,6 +37,7 @@ const handleRun = async (row: any) => {
 
   console.log(queueId)
   console.log(buildNumber)
+  console.log(build.result)
 
   if (build.result === "SUCCESS") {
     row.color = "blue"

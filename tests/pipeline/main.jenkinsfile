@@ -1,0 +1,62 @@
+import groovy.json.JsonSlurper
+
+def configs = '''
+{
+  "version": "2.4.0300",
+  "repos_config":{
+    "emos_workspace": {
+      "branch": "feature_jenkins",
+      "url": "https://gitlab.enjoymove.cn/framework1/emos_workspace.git",
+      "repo_path": "${WORKSPACE}/prj_root/",
+      "credentials_id": "aedc55b4-9094-4cc3-b0d9-dd8a0b772651"
+    },
+    "emos_sdk": {
+      "branch": "master",
+      "url": "https://gitlab.enjoymove.cn/framework1/emos_sdk.git",
+      "repo_path": "${WORKSPACE}/prj_root/CodeRoot/src/emos_sdk",
+      "credentials_id": "aedc55b4-9094-4cc3-b0d9-dd8a0b772651"
+    }
+  }
+}
+'''
+
+pipeline {
+    agent any
+    environment {
+        scripts_url = "https://oauth2:f411c54221e451cbda565424869323b6@gitee.com/qiuyeyijian/scripts.git"
+        emtest_url = "https://oauth2:f411c54221e451cbda565424869323b6@gitee.com/qiuyeyijian/emtest.git"
+        it_branch = "master"
+    }
+    stages {
+        stage('Clean Workspace') {
+            steps {
+                catchError {
+                    deleteDir()
+                }
+            }
+        }
+        stage('Checkout') {
+            steps {
+                script{
+                    dir("emtest"){
+                        git branch: "${it_branch}", url: "${scripts_url}"
+                    }
+                    dir("emtest/scripts"){
+                        git branch: "${it_branch}", url: "${emtest_url}"
+                    }
+                }
+            }
+        }
+
+        stage('Print') {
+            steps {
+                script{
+                    def jsonSlurper = new JsonSlurper()
+                    def jsonObject = jsonSlurper.parseText(configs)
+                    echo "Version: ${jsonObject.version}"
+                    echo "repos_config: ${jsonObject.repos_config}"
+                }
+            }
+        }
+    }
+}
