@@ -7,8 +7,8 @@ import { JobPath } from "jenkins-client-ts"
 
 const jenkins = new JenkinsClient({
   baseUrl: "/jenkins",
-  username: "qiuyeyijian",
-  password: "qiuyeyijian"
+  username: import.meta.env.VITE_JENKINS_USERNAME,
+  password: import.meta.env.VITE_JENKINS_PASSWORD
 })
 
 interface IPipelineInfo {

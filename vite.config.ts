@@ -12,7 +12,7 @@ import { nodePolyfills } from "vite-plugin-node-polyfills"
 /** 配置项文档：https://cn.vitejs.dev/config */
 export default (configEnv: ConfigEnv): UserConfigExport => {
   const viteEnv = loadEnv(configEnv.mode, process.cwd()) as ImportMetaEnv
-  const { VITE_PUBLIC_PATH } = viteEnv
+  const { VITE_PUBLIC_PATH, VITE_JENKINS_BASE_URL } = viteEnv
   return {
     /** 打包时根据实际情况修改 base */
     base: VITE_PUBLIC_PATH,
@@ -44,7 +44,7 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
           changeOrigin: true
         },
         "/jenkins": {
-          target: "http://localhost:8080",
+          target: VITE_JENKINS_BASE_URL,
           ws: true,
           /** 是否允许跨域 */
           changeOrigin: true,
