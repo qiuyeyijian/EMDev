@@ -6,7 +6,7 @@ import { JenkinsClient } from "jenkins-client-ts"
 import { JobPath } from "jenkins-client-ts"
 
 const jenkins = new JenkinsClient({
-  baseUrl: "/jenkins",
+  baseUrl: import.meta.env.VITE_JENKINS_BASE_URL,
   username: import.meta.env.VITE_JENKINS_USERNAME,
   password: import.meta.env.VITE_JENKINS_PASSWORD
 })
@@ -20,6 +20,8 @@ interface IPipelineInfo {
 const tableData = reactive<IPipelineInfo[]>([])
 async function getAllPipelineInfo() {
   const jobs: any = await jenkins.jobs.list("/")
+  console.log("jobs", jobs)
+  console.log("jenkins", jenkins)
   tableData.push(...jobs)
   console.log(jobs)
 }

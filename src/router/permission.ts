@@ -19,20 +19,21 @@ router.beforeEach(async (to, _from, next) => {
   NProgress.start()
   const userStore = useUserStoreHook()
   const permissionStore = usePermissionStoreHook()
-  const token = getToken()
+  // const token = getToken()
 
   // 判断该用户是否已经登录
-  if (!token) {
-    // 如果在免登录的白名单中，则直接进入
-    if (isWhiteList(to)) {
-      next()
-    } else {
-      // 其他没有访问权限的页面将被重定向到登录页面
-      NProgress.done()
-      next("/login")
-    }
-    return
-  }
+  // 因为打包的客户端不支持cookie，所以展示不做判断
+  // if (!token) {
+  //   // 如果在免登录的白名单中，则直接进入
+  //   if (isWhiteList(to)) {
+  //     next()
+  //   } else {
+  //     // 其他没有访问权限的页面将被重定向到登录页面
+  //     NProgress.done()
+  //     next("/login")
+  //   }
+  //   return
+  // }
 
   // 如果已经登录，并准备进入 Login 页面，则重定向到主页
   if (to.path === "/login") {
