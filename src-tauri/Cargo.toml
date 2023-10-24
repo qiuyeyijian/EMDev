@@ -1,11 +1,11 @@
 [package]
-name = "app"
+name = "emdev"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "A development tool"
+authors = ["qiuyeyijian"]
 license = ""
 repository = ""
-default-run = "app"
+default-run = "emdev"
 edition = "2021"
 rust-version = "1.60"
 
