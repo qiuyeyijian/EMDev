@@ -42,13 +42,6 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
           ws: true,
           /** 是否允许跨域 */
           changeOrigin: true
-        },
-        "/jenkins": {
-          target: VITE_JENKINS_BASE_URL,
-          ws: true,
-          /** 是否允许跨域 */
-          changeOrigin: true,
-          rewrite: (path) => path.replace("/jenkins", "")
         }
       }
     },
