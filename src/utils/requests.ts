@@ -13,11 +13,12 @@
  * limitations under the License.
  */
 
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, Method } from "axios"
+import axios, { AxiosHeaders, AxiosInstance, AxiosRequestConfig, AxiosResponse, Method } from "axios"
 import { wrapper as cookieJarWrapper } from "axios-cookiejar-support"
 import { CookieJar } from "tough-cookie"
 import { JenkinsError } from "./error"
 import deepmerge from "deepmerge"
+import axiosTauriApiAdapter from "axios-tauri-api-adapter"
 
 type JenkinsApiRes = {
   data: any
@@ -104,7 +105,7 @@ export class JenkinsRequests {
     data: { [key: string]: string | number | boolean },
     config?: AxiosRequestConfig
   ): Promise<JenkinsApiRes> {
-    const formUrlEncoded = (x) => Object.keys(x).reduce((p, c) => `${p}&${c}=${encodeURIComponent(x[c])}`, "")
+    const formUrlEncoded = (x: any) => Object.keys(x).reduce((p, c) => `${p}&${c}=${encodeURIComponent(x[c])}`, "")
     return this.request("POST", url, config, formUrlEncoded(data), {
       "content-type": "application/x-www-form-urlencoded"
     })
@@ -135,7 +136,7 @@ export class JenkinsRequests {
     data?: any,
     headers?: Record<string, string>
   ): Promise<JenkinsApiRes> {
-    return this.processRequest(() =>
+    const res: any = this.processRequest(() =>
       this.getAxios().request(
         deepmerge(deepmerge(this.options.config ?? {}, config ?? {}), {
           method,
@@ -143,11 +144,12 @@ export class JenkinsRequests {
           data,
           headers: deepmerge(
             deepmerge(this.crumbHeaders, headers ?? {}),
-            deepmerge(this.options.config?.headers ?? {}, config?.headers ?? {})
+            deepmerge((this.options.config?.headers ?? {}) as AxiosHeaders, (config?.headers ?? {}) as AxiosHeaders)
           )
         })
       )
     )
+    return res
   }
 
   private getAxios(): AxiosInstance {
@@ -161,6 +163,6 @@ export class JenkinsRequests {
       }
       options.withCredentials = true
     }
-    return cookieJarWrapper(axios.create({ ...options, jar: this.cookieJar }))
+    return cookieJarWrapper(axios.create({ ...options, jar: this.cookieJar, adapter: axiosTauriApiAdapter }))
   }
 }

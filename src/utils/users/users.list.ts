@@ -120,4 +120,4 @@ import { JenkinsUser } from "../types"
  *
  */
 export const list = async (requests: JenkinsRequests): Promise<JenkinsUser[]> =>
-  requests.get(`/asynchPeople/api/json`).then((res) => res.data.users.map((u) => u.user))
+  requests.get(`/asynchPeople/api/json`).then((res) => res.data.users.map((u: any) => u.user))

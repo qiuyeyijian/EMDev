@@ -2,8 +2,8 @@
 import { request } from "@/utils/service"
 import { ElMessageBox, ElMessage } from "element-plus"
 import { reactive, onMounted } from "vue"
-import { JenkinsClient } from "jenkins-client-ts"
-import { JobPath } from "jenkins-client-ts"
+import { JenkinsClient } from "@/utils/jenkins-client"
+import { JobPath } from "@/utils/jenkins-client"
 
 const jenkins = new JenkinsClient({
   baseUrl: import.meta.env.VITE_JENKINS_BASE_URL,
