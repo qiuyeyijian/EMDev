@@ -72,7 +72,7 @@ export const list = async (
   pathOrUser: string
 ): Promise<JenkinsCredentialDomain[]> => {
   if (store === "user") {
-    /* 
+    /*
       This is a workaround for the issue with 500 error for /user/<user>/credentials/store/user/api/json url.
       Parse html for domain names and get each domain independently.
      */

@@ -2,8 +2,8 @@
 import { request } from "@/utils/service"
 import { ElMessageBox, ElMessage } from "element-plus"
 import { reactive, onMounted } from "vue"
-import { JenkinsClient } from "@/utils/jenkins-client"
-import { JobPath } from "@/utils/jenkins-client"
+import { JenkinsClient } from "@/utils/jenkins/index"
+import { JobPath } from "@/utils/jenkins/index"
 
 const jenkins = new JenkinsClient({
   baseUrl: import.meta.env.VITE_JENKINS_BASE_URL,
@@ -80,3 +80,4 @@ onMounted(() => {
     </el-table-column>
   </el-table>
 </template>
+@/utils/jenkins-client/jenkins-client@/utils/jenkins-client/jenkins-client @/utils/jenkins/index@/utils/jenkins/index
