@@ -1,9 +1,14 @@
 <script lang="ts" setup>
-import { request } from "@/utils/service"
-import { ElMessageBox, ElMessage } from "element-plus"
+import { ElMessage } from "element-plus"
 import { reactive, onMounted } from "vue"
 import { JenkinsClient } from "@/utils/jenkins/index"
 import { JobPath } from "@/utils/jenkins/index"
+
+// import { homeDir, appDataDir } from "@tauri-apps/api/path"
+// const homeDirPath = await homeDir()
+// const appDataDirPath = await appDataDir()
+
+// ElMessage.success(appDataDirPath)
 
 const jenkins = new JenkinsClient({
   baseUrl: import.meta.env.VITE_JENKINS_BASE_URL,
@@ -20,8 +25,6 @@ interface IPipelineInfo {
 const tableData = reactive<IPipelineInfo[]>([])
 async function getAllPipelineInfo() {
   const jobs: any = await jenkins.jobs.list("/")
-  console.log("jobs", jobs)
-  console.log("jenkins", jenkins)
   tableData.push(...jobs)
   console.log(jobs)
 }
@@ -32,7 +35,7 @@ const handleRun = async (row: any) => {
   const jobPath = JobPath.parse(row.url).path()
   // trigger a job with parameters, wait for it to complete, then check wheter job result is 'SUCCESS'
   const queueId = await jenkins.jobs.build(jobPath, undefined, {
-    waitForStart: true
+    wait: true
   })
   const buildNumber = (await jenkins.queue.get(queueId)).executable.number
   const build = await jenkins.builds.get(jobPath, buildNumber)
@@ -43,8 +46,10 @@ const handleRun = async (row: any) => {
 
   if (build.result === "SUCCESS") {
     row.color = "blue"
+    ElMessage.success("success")
   } else {
     row.color = "red"
+    ElMessage.error("failed")
   }
 }
 
@@ -75,9 +80,10 @@ onMounted(() => {
       <template #default="scope">
         <el-button type="primary" text bg size="small" @click="handleRun(scope.row)">运行</el-button>
         <el-button type="danger" text bg size="small" @click="handleConfig(scope.row)">配置</el-button>
-        <el-button type="info" text bg size="small" @click="handleWeb(scope.row)">网页版</el-button>
+        <el-button type="info" text bg size="small" @click="handleWeb(scope.row)">
+          <a :href="scope.row.url" target="_blank"> 网页版</a>
+        </el-button>
       </template>
     </el-table-column>
   </el-table>
 </template>
-@/utils/jenkins-client/jenkins-client@/utils/jenkins-client/jenkins-client @/utils/jenkins/index@/utils/jenkins/index

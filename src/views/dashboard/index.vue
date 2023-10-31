@@ -8,5 +8,6 @@ const isAdmin = userStore.roles.includes("admin")
 </script>
 
 <template>
-  <component :is="isAdmin ? Admin : Editor" />
+  <!-- <component :is="isAdmin ? Admin : Editor" /> -->
+  <div>Hello, World!</div>
 </template>

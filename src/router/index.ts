@@ -60,6 +60,22 @@ export const constantRoutes: RouteRecordRaw[] = [
         }
       }
     ]
+  },
+  {
+    path: "/jobs",
+    component: Layouts,
+    redirect: "/jobs/index",
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/jobs/index.vue"),
+        name: "Jobs",
+        meta: {
+          title: "Jobs",
+          svgIcon: "unocss"
+        }
+      }
+    ]
   }
   // {
   //   path: "/unocss",
