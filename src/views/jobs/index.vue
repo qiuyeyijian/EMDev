@@ -89,7 +89,7 @@ onMounted(() => {
         <template #default="scope">
           <el-button type="primary" text bg size="small" @click="handleRun(scope.row)">运行</el-button>
           <el-button type="danger" text bg size="small" @click="handleConfig(scope.row)">配置</el-button>
-          <el-button type="info" text bg size="small" @click="handleWeb(scope.row)">
+          <el-button type="info" text bg size="small">
             <a :href="scope.row.url" target="_blank"> 网页版</a>
           </el-button>
         </template>
