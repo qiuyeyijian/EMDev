@@ -30,7 +30,7 @@
         "removeFile": true,
         "renameFile": true,
         "exists": true,
-        "scope": ["*"]
+        "scope": ["$HOME/**/*", "$APPDATA/**/*", "$APPCONFIG/**/*", "$CONFIG/**/*"]
       }
     },
     "bundle": {
