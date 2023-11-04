@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { computed, ref, shallowRef } from "vue"
 import { type RouteRecordName, type RouteRecordRaw, useRouter } from "vue-router"
-import { useAppStore } from "@/store/modules/app"
-import { usePermissionStore } from "@/store/modules/permission"
+import { useAppStore } from "@/stores/modules/app"
+import { usePermissionStore } from "@/stores/modules/permission"
 import SearchResult from "./SearchResult.vue"
 import SearchFooter from "./SearchFooter.vue"
 import { ElMessage, ElScrollbar } from "element-plus"
@@ -217,3 +217,4 @@ const handleReleaseUpOrDown = () => {
   }
 }
 </style>
+@/stores/modules/app@/stores/modules/permission

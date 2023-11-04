@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { computed } from "vue"
 import { storeToRefs } from "pinia"
-import { useAppStore } from "@/store/modules/app"
-import { useSettingsStore } from "@/store/modules/settings"
+import { useAppStore } from "@/stores/modules/app"
+import { useSettingsStore } from "@/stores/modules/settings"
 import { AppMain, NavigationBar, Sidebar, TagsView } from "./components"
 import { DeviceEnum } from "@/constants/app-key"
 
@@ -166,3 +166,4 @@ $transition-time: 0.35s;
   }
 }
 </style>
+@/stores/modules/app@/stores/modules/settings

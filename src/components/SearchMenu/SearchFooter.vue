@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from "vue"
-import { useAppStore } from "@/store/modules/app"
+import { useAppStore } from "@/stores/modules/app"
 import { DeviceEnum } from "@/constants/app-key"
 
 interface Props {
@@ -55,3 +55,4 @@ const isMobile = computed(() => appStore.device === DeviceEnum.Mobile)
   }
 }
 </style>
+@/stores/modules/app

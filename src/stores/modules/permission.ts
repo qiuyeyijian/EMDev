@@ -1,5 +1,5 @@
 import { ref } from "vue"
-import store from "@/store"
+import piniaStore from "@/stores"
 import { defineStore } from "pinia"
 import { type RouteRecordRaw } from "vue-router"
 import { constantRoutes, asyncRoutes } from "@/router"
@@ -40,5 +40,5 @@ export const usePermissionStore = defineStore("permission", () => {
 
 /** 在 setup 外使用 */
 export function usePermissionStoreHook() {
-  return usePermissionStore(store)
+  return usePermissionStore(piniaStore)
 }

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { storeToRefs } from "pinia"
-import { useSettingsStore } from "@/store/modules/settings"
+import { useSettingsStore } from "@/stores/modules/settings"
 import { AppMain, NavigationBar, TagsView, Logo } from "./components"
 
 const settingsStore = useSettingsStore()
@@ -74,3 +74,4 @@ $transition-time: 0.35s;
   }
 }
 </style>
+@/stores/modules/settings

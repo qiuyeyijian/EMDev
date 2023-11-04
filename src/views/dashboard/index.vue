@@ -1,35 +1,28 @@
 <script lang="ts" setup>
-import { useUserStore } from "@/store/modules/user"
-import { fs, path } from "@tauri-apps/api"
-import Admin from "./components/Admin.vue"
-import Editor from "./components/Editor.vue"
-import { ref } from "vue"
+import { useAppConfigStore } from "@/stores/modules/app-config"
+const appConfig = useAppConfigStore().appConfig
 
-const userStore = useUserStore()
-const isAdmin = userStore.roles.includes("admin")
+// appConfig.set("key2", "value2")
+// console.log(appConfig.get("key1"))
+// appConfig.set("key3", "vlaue3")
+// import { useUserStore } from "@/stores/modules/user"
+// import Admin from "./components/Admin.vue"
+// import Editor from "./components/Editor.vue"
+// import { ref } from "vue"
 
-path.appDataDir().then((res) => {
-  console.log("appData", res)
-})
+// const userStore = useUserStore()
+// const isAdmin = userStore.roles.includes("admin")
 
-path.homeDir().then((res) => {
-  console.log("homeDir", res)
-})
+// async function write(content: string) {
+//   const isExists = await fs.exists("emdev", { dir: fs.BaseDirectory.Config })
 
-path.configDir().then((res) => {
-  console.log("configDir", res)
-})
+//   if (!isExists) {
+//     await fs.createDir("emdev", { dir: fs.BaseDirectory.Config, recursive: true })
+//   }
+//   return await fs.writeTextFile("emdev/config.json", content, { dir: fs.BaseDirectory.Config })
+// }
 
-async function write(content: string) {
-  const isExists = await fs.exists("emdev", { dir: fs.BaseDirectory.Config })
-
-  if (!isExists) {
-    await fs.createDir("emdev", { dir: fs.BaseDirectory.Config, recursive: true })
-  }
-  return await fs.writeTextFile("emdev/config.json", content, { dir: fs.BaseDirectory.Config })
-}
-
-write("Hello world!")
+// write("Hello world!")
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 import { ref } from "vue"
-import store from "@/store"
+import piniaStore from "@/stores"
 import { defineStore } from "pinia"
 import { usePermissionStore } from "./permission"
 import { useTagsViewStore } from "./tags-view"
@@ -77,5 +77,5 @@ export const useUserStore = defineStore("user", () => {
 
 /** 在 setup 外使用 */
 export function useUserStoreHook() {
-  return useUserStore(store)
+  return useUserStore(piniaStore)
 }

@@ -2,9 +2,9 @@
 import { computed } from "vue"
 import { useRoute } from "vue-router"
 import { storeToRefs } from "pinia"
-import { useAppStore } from "@/store/modules/app"
-import { usePermissionStore } from "@/store/modules/permission"
-import { useSettingsStore } from "@/store/modules/settings"
+import { useAppStore } from "@/stores/modules/app"
+import { usePermissionStore } from "@/stores/modules/permission"
+import { useSettingsStore } from "@/stores/modules/settings"
 import SidebarItem from "./SidebarItem.vue"
 import Logo from "../Logo/index.vue"
 import { getCssVariableValue } from "@/utils"
@@ -169,3 +169,4 @@ const hiddenScrollbarVerticalBar = computed(() => {
   }
 }
 </style>
+@/stores/modules/app@/stores/modules/permission@/stores/modules/settings

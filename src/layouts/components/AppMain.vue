@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { useRoute } from "vue-router"
 import { computed } from "vue"
-import { useTagsViewStore } from "@/store/modules/tags-view"
-import { useSettingsStore } from "@/store/modules/settings"
+import { useTagsViewStore } from "@/stores/modules/tags-view"
+import { useSettingsStore } from "@/stores/modules/settings"
 import Footer from "./Footer/index.vue"
 
 const route = useRoute()
@@ -55,3 +55,4 @@ const settingsStore = useSettingsStore()
   }
 }
 </style>
+@/stores/modules/tags-view@/stores/modules/settings

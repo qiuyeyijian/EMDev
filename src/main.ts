@@ -1,7 +1,7 @@
 // core
 import { createApp } from "vue"
 import App from "@/App.vue"
-import store from "@/store"
+import piniaStore from "@/stores"
 import router from "@/router"
 import "@/router/permission"
 // load
@@ -26,7 +26,7 @@ loadSvg(app)
 /** 加载自定义指令 */
 loadDirectives(app)
 
-app.use(store).use(router)
+app.use(piniaStore).use(router)
 router.isReady().then(() => {
   app.mount("#app")
 })

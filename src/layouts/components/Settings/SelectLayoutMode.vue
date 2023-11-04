@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from "vue"
 import { storeToRefs } from "pinia"
-import { useSettingsStore } from "@/store/modules/settings"
+import { useSettingsStore } from "@/stores/modules/settings"
 
 const settingsStore = useSettingsStore()
 
@@ -104,3 +104,4 @@ const isLeftTop = computed(() => layoutMode.value === "left-top")
   }
 }
 </style>
+@/stores/modules/settings

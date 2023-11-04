@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { computed, watchEffect } from "vue"
 import { storeToRefs } from "pinia"
-import { useAppStore } from "@/store/modules/app"
-import { useSettingsStore } from "@/store/modules/settings"
+import { useAppStore } from "@/stores/modules/app"
+import { useSettingsStore } from "@/stores/modules/settings"
 import useResize from "./hooks/useResize"
 import { useWatermark } from "@/hooks/useWatermark"
 import LeftMode from "./LeftMode.vue"
@@ -69,3 +69,4 @@ watchEffect(() => {
   filter: invert(0.8);
 }
 </style>
+@/stores/modules/app@/stores/modules/settings
