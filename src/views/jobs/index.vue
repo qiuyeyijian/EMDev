@@ -1,23 +1,13 @@
 <script lang="ts" setup>
 import { ElMessage } from "element-plus"
 import { Component, reactive, ref, onMounted, Ref } from "vue"
-import { JenkinsClient } from "@/utils/jenkins/index"
+// import { JenkinsClient } from "@/utils/jenkins/index"
 import { JobPath } from "@/utils/jenkins/index"
-import { onBeforeRouteUpdate } from "vue-router"
+import { useJenkinsStore } from "@/stores/modules/jenkins"
 
-// import { homeDir, appDataDir } from "@tauri-apps/api/path"
-// const homeDirPath = await homeDir()
-// const appDataDirPath = await appDataDir()
-
-// ElMessage.success(appDataDirPath)
-
-// const jenkins = new JenkinsClient({
-//   baseUrl: import.meta.env.VITE_JENKINS_BASE_URL,
-//   username: import.meta.env.VITE_JENKINS_USERNAME,
-//   password: import.meta.env.VITE_JENKINS_PASSWORD
-// })
-const useInstance = <T extends abstract new (...args: any[]) => Component>() => ref() as Ref<InstanceType<T>>
-const jenkins = useInstance<typeof JenkinsClient>()
+// const useInstance = <T extends abstract new (...args: any[]) => Component>() => ref() as Ref<InstanceType<T>>
+// const jenkins = useInstance<typeof JenkinsClient>()
+const jenkins = useJenkinsStore().jenkins
 
 interface IPipelineInfo {
   name: string
@@ -27,7 +17,7 @@ interface IPipelineInfo {
 
 const tableData = reactive<IPipelineInfo[]>([])
 async function getAllPipelineInfo() {
-  const jobs: any = await jenkins.value.jobs.list("/")
+  const jobs: any = await jenkins.jobs.list("/")
   tableData.push(...jobs)
   console.log(jobs)
 }
@@ -37,11 +27,11 @@ const handleRun = async (row: any) => {
   row.color = "gray"
   const jobPath = JobPath.parse(row.url).path()
   // trigger a job with parameters, wait for it to complete, then check wheter job result is 'SUCCESS'
-  const queueId = await jenkins.value.jobs.build(jobPath, undefined, {
+  const queueId = await jenkins.jobs.build(jobPath, undefined, {
     wait: true
   })
-  const buildNumber = (await jenkins.value.queue.get(queueId)).executable.number
-  const build = await jenkins.value.builds.get(jobPath, buildNumber)
+  const buildNumber = (await jenkins.queue.get(queueId)).executable.number
+  const build = await jenkins.builds.get(jobPath, buildNumber)
 
   console.log(queueId)
   console.log(buildNumber)
@@ -60,16 +50,7 @@ const handleConfig = (row: any) => {
   console.log(row)
 }
 
-const handleWeb = (row: any) => {
-  window.open(row.url, "_blank")
-}
-
 onMounted(() => {
-  jenkins.value = new JenkinsClient({
-    baseUrl: import.meta.env.VITE_JENKINS_BASE_URL,
-    username: import.meta.env.VITE_JENKINS_USERNAME,
-    password: import.meta.env.VITE_JENKINS_PASSWORD
-  })
   getAllPipelineInfo()
 })
 </script>
