@@ -1,6 +1,6 @@
 import { ref } from "vue"
 import { defineStore } from "pinia"
-import { JenkinsClient } from "jenkins-client-ts"
+import { JenkinsClient } from "@/utils/jenkins/index"
 import { useAppConfigStore } from "./app-config"
 const appConfig = useAppConfigStore().appConfig
 const jenkinsConfig: any = await appConfig.get("jenkins")
