@@ -69,7 +69,7 @@ jobs:
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
         with:
           tagName: alpha
-          releaseName: "Clash Verge Alpha"
+          releaseName: "EMDev Alpha"
           releaseBody: "Alpha Version (include debug)"
           releaseDraft: false
           includeUpdaterJson: false
