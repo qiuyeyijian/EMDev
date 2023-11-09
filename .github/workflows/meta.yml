@@ -37,7 +37,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: 18
 
       - name: Delete current release assets
         if: matrix.os == 'ubuntu-latest'
