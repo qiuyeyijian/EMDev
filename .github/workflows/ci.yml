@@ -43,7 +43,7 @@ jobs:
       - name: Add host key (windows only)
         if: startsWith(matrix.os, 'windows-')
         run: |
-          ssh-keygen -R github.com
+          ssh -T git@github.com
 
       - name: Install Dependencies (ubuntu only)
         if: startsWith(matrix.os, 'ubuntu-')
