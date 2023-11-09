@@ -12,7 +12,10 @@ env:
 
 jobs:
   release:
+    permissions:
+      contents: write
     strategy:
+      fail-fast: false
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
@@ -25,22 +28,17 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: install Rust stable
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Rust Cache
-        uses: Swatinem/rust-cache@v2
+      - name: setup node
+        uses: actions/setup-node@v3
         with:
-          workspaces: src-tauri
-
-      - name: Install Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "18"
+          node-version: 18
 
       - uses: pnpm/action-setup@v2
         with:
           version: 8
+
+      - name: install Rust stable
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Install Dependencies (ubuntu only)
         if: startsWith(matrix.os, 'ubuntu-')
@@ -92,9 +90,9 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Install Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: 18
 
       - name: Pnpm install
         run: pnpm install
