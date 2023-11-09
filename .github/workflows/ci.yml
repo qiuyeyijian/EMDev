@@ -50,7 +50,7 @@ jobs:
 
       - name: Pnpm install and check
         run: |
-          pnpm install --network-timeout 1000000 --frozen-lockfile
+          pnpm install
           pnpm run check
 
       - name: Tauri build
@@ -98,7 +98,7 @@ jobs:
           node-version: "18"
 
       - name: Pnpm install
-        run: pnpm install --network-timeout 1000000 --frozen-lockfile
+        run: pnpm install
 
       - name: Release updater file
         run: pnpm run updater
