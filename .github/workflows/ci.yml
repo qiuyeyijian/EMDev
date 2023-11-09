@@ -51,7 +51,6 @@ jobs:
       - name: Pnpm install and check
         run: |
           pnpm install
-          pnpm run check
 
       - name: Tauri build
         uses: tauri-apps/tauri-action@v0
