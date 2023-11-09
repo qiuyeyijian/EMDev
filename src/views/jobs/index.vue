@@ -1,13 +1,10 @@
 <script lang="ts" setup>
 import { ElMessage } from "element-plus"
-import { Component, reactive, ref, onMounted, Ref } from "vue"
-// import { JenkinsClient } from "@/utils/jenkins/index"
+import { reactive, onMounted } from "vue"
 import { JobPath } from "@/utils/jenkins/index"
 import { useJenkinsStore } from "@/stores/modules/jenkins"
 
-// const useInstance = <T extends abstract new (...args: any[]) => Component>() => ref() as Ref<InstanceType<T>>
-// const jenkins = useInstance<typeof JenkinsClient>()
-const jenkins = useJenkinsStore().jenkins
+const jenkinsStore = useJenkinsStore()
 
 interface IPipelineInfo {
   name: string
@@ -17,21 +14,20 @@ interface IPipelineInfo {
 
 const tableData = reactive<IPipelineInfo[]>([])
 async function getAllPipelineInfo() {
-  const jobs: any = await jenkins.jobs.list("/")
+  await jenkinsStore.init()
+  const jobs: any = await jenkinsStore.jenkins.jobs.list("/")
   tableData.push(...jobs)
-  console.log(jobs)
 }
 
 const handleRun = async (row: any) => {
   console.log(row)
   row.color = "gray"
   const jobPath = JobPath.parse(row.url).path()
-  // trigger a job with parameters, wait for it to complete, then check wheter job result is 'SUCCESS'
-  const queueId = await jenkins.jobs.build(jobPath, undefined, {
+  const queueId = await jenkinsStore.jenkins.jobs.build(jobPath, undefined, {
     wait: true
   })
-  const buildNumber = (await jenkins.queue.get(queueId)).executable.number
-  const build = await jenkins.builds.get(jobPath, buildNumber)
+  const buildNumber = (await jenkinsStore.jenkins.queue.get(queueId)).executable.number
+  const build = await jenkinsStore.jenkins.builds.get(jobPath, buildNumber)
 
   console.log(queueId)
   console.log(buildNumber)
