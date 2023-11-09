@@ -1,7 +1,7 @@
 import fs from "fs-extra"
 import path from "path"
 
-const UPDATE_LOG = "UPDATELOG.md"
+const UPDATE_LOG = "CHANGELOG.md"
 
 // parse the UPDATELOG.md
 export async function resolveUpdateLog(tag) {
