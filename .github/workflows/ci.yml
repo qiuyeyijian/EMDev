@@ -40,6 +40,11 @@ jobs:
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable
 
+      - name: Add host key (windows only)
+        if: startsWith(matrix.os, 'windows-')
+        run: |
+          ssh-keygen -R github.com
+
       - name: Install Dependencies (ubuntu only)
         if: startsWith(matrix.os, 'ubuntu-')
         run: |
@@ -63,6 +68,7 @@ jobs:
           releaseBody: "More new features are now supported."
           releaseDraft: false
           prerelease: true
+          includeDebug: false
 
       - name: Portable Bundle
         if: startsWith(matrix.os, 'windows-')
