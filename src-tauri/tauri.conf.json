@@ -9,7 +9,7 @@
   },
   "package": {
     "productName": "EMDev",
-    "version": "0.1.0"
+    "version": "0.2.0"
   },
   "tauri": {
     "allowlist": {
@@ -68,7 +68,9 @@
       "active": true,
       "endpoints": [
         "https://ghproxy.com/https://github.com/qiuyeyijian/EMDev/releases/download/updater/update-proxy.json",
-        "https://github.com/qiuyeyijian/EMDev/releases/download/updater/update.json"
+        "https://github.com/qiuyeyijian/EMDev/releases/download/updater/update.json",
+        "https://ghproxy.com/https://github.com/bu-rong/EMDev/releases/download/updater/update-proxy.json",
+        "https://github.com/bu-rong/EMDev/releases/download/updater/update.json"
       ],
       "dialog": true,
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IERFNDc2RUMwNTM5MjQwRTcKUldUblFKSlR3RzVIM2dXT1UxbS93SlRWVndNR1RNU2I0T0FtY0NEMVVqWGtKbGhUdDJjWHRiajkK",

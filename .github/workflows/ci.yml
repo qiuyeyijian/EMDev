@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [windows-latest]
+        platform: [windows-latest, macos-latest]
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout repository
@@ -65,7 +65,7 @@ jobs:
           releaseName: "EMDev v__VERSION__"
           releaseBody: "More new features are now supported."
           releaseDraft: false
-          prerelease: true
+          prerelease: false
           includeDebug: false
 
       - name: Portable Bundle
