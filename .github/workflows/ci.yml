@@ -17,8 +17,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
+        platform: [macos-latest, ubuntu-20.04, windows-latest]
+    runs-on: ${{ matrix.platform }}
     if: startsWith(github.repository, 'qiuyeyijian')
     steps:
       - name: Checkout repository
@@ -28,7 +28,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: setup node
+      - name: Setup node
         uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -37,21 +37,16 @@ jobs:
         with:
           version: 8
 
-      - name: install Rust stable
+      - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Add host key (windows only)
-        if: startsWith(matrix.os, 'windows-')
-        run: |
-          ssh -T git@github.com
-
       - name: Install Dependencies (ubuntu only)
-        if: startsWith(matrix.os, 'ubuntu-')
+        if: startsWith(matrix.platform, 'ubuntu-')
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf openssl
 
-      - name: Pnpm install and check
+      - name: Install frontend dependencies
         run: |
           pnpm install
 
@@ -71,7 +66,7 @@ jobs:
           includeDebug: false
 
       - name: Portable Bundle
-        if: startsWith(matrix.os, 'windows-')
+        if: startsWith(matrix.platform, 'windows-')
         # rebuild with env settings
         run: |
           pnpm build
