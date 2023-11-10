@@ -80,6 +80,7 @@ jobs:
           VITE_WIN_PORTABLE: 1
 
   release-update:
+    needs: release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
