@@ -19,7 +19,6 @@ jobs:
       matrix:
         platform: [windows-latest]
     runs-on: ${{ matrix.platform }}
-    if: startsWith(github.repository, 'qiuyeyijian')
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
