@@ -40,6 +40,11 @@ jobs:
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
 
+      - name: Add host key (windows only)
+        if: startsWith(matrix.platform, 'windows-')
+        run: |
+          ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+
       - name: Install Dependencies (ubuntu only)
         if: startsWith(matrix.platform, 'ubuntu-')
         run: |
