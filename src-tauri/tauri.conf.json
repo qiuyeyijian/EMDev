@@ -9,7 +9,7 @@
   },
   "package": {
     "productName": "EMDev",
-    "version": "0.3.0"
+    "version": "../package.json"
   },
   "tauri": {
     "allowlist": {
